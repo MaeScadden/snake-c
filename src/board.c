@@ -1,14 +1,13 @@
 #include "includes/board.h"
 
-void board_update(Board **board, Snake **snake) {
+void board_update(Board **board) {
   Board *b = *board;
 
   char tile = TILE_SNAKE_HEAD_CHAR;
-  if (snake != NULL) {
-    Snake *s = *snake;
+  if (b->snake != NULL) {
+    Snake *s = b->snake;
 
-    // pop snake end
-    SnakeBody *current = s->body;
+    Snake *current = &*s;
     while (current != NULL) {
       if (current->next != NULL) {
         current = current->next;
@@ -24,15 +23,15 @@ void board_update(Board **board, Snake **snake) {
       break;
     }
 
-    SnakeBody *new_head = malloc(sizeof(SnakeBody));
-    SnakeBody *head = s->body;
+    Snake *new_head = malloc(sizeof(Snake));
+    Snake *head = s;
     new_head->x = head->x;
     new_head->y = head->y;
 
-    s->body->prev = new_head;
-    new_head->next = &*s->body;
+    b->snake->prev = new_head;
+    new_head->next = &*s;
 
-    switch (s->direction) {
+    switch (b->snake_direction) {
     case SNAKE_LEFT: {
       if (head->x == 0) {
         Panic("Game over! snake hit left wall\n");
@@ -77,9 +76,9 @@ void board_update(Board **board, Snake **snake) {
       current = current->next;
     }
 
-    s->body = new_head;
+    b->snake = new_head;
 
-    current = s->body;
+    current = &*b->snake;
     while (current != NULL) {
       b->lines[current->y][current->x] = tile;
       current = current->next;
@@ -87,13 +86,25 @@ void board_update(Board **board, Snake **snake) {
     }
   }
 
-  // draw fruits
+  /*
+  Fruit *fruit = b->fruit;
+  while (fruit) {
+    Snake snake_body = &*b->snake;
+  }
+  */
 }
 
-Board *board_init(unsigned int cols, unsigned int rows) {
+Board *board_init(unsigned int cols, unsigned int rows,
+                  int snake_start_direction) {
   Board *board = malloc(sizeof(Board));
   board->rows = rows;
   board->cols = cols;
+
+  if (!snake_valid_direction(snake_start_direction))
+    Panic("snake direction of value[%d] is not valid\n", snake_start_direction);
+
+  board->snake_direction = snake_start_direction;
+  board->snake = snake_init(20, 8);
 
   board->lines = malloc(sizeof(char *) * board->rows);
 
@@ -107,7 +118,7 @@ Board *board_init(unsigned int cols, unsigned int rows) {
     board->lines[row][cols] = '\n';
   }
 
-  board_update(&board, NULL);
+  board_update(&board);
 
   return board;
 }

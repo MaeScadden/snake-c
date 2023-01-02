@@ -5,4 +5,4 @@
 #include "screen.h"
 #include "snake.h"
 
-int game_start_interactive(Screen **screen, Board **board, Snake **snake);
+int game_start_interactive(Screen **screen, Board **board);

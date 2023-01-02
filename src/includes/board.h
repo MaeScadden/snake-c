@@ -12,15 +12,19 @@ typedef struct {
   unsigned long size;
   unsigned int cols;
   unsigned int rows;
+  Snake *snake;
+  SnakeDirection snake_direction;
 } Board;
 
-void board_update(Board **board, Snake **snake);
-Board *board_init(unsigned int width, unsigned int height);
+void board_update(Board **board);
+Board *board_init(unsigned int width, unsigned int height,
+                  int snake_start_direction);
 
 #define CleanupBoard(_world)                                                   \
   do {                                                                         \
     if (world == NULL)                                                         \
       break;                                                                   \
     free(world->board);                                                        \
+    free(world->snake);                                                        \
     free(world);                                                               \
   } while (0)

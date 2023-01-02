@@ -2,8 +2,8 @@
 
 int _game_score(Snake *snake) {
   int total = 0;
-  SnakeBody *current = snake->body;
 
+  Snake *current = &*snake;
   while (current != NULL) {
     total++;
     current = current->next;
@@ -12,9 +12,9 @@ int _game_score(Snake *snake) {
   return total;
 }
 
-void _game_update(Board **board, Snake **snake) {
+void _game_update(Board **board) {
   //
-  board_update(board, snake);
+  board_update(board);
 }
 
 void _game_render(Board **board, int score) {
@@ -22,24 +22,22 @@ void _game_render(Board **board, int score) {
 
   Board *b = *board;
 
-  fprintf(stdout, "Top Row\n");
+  fprintf(stdout, "Snake in c         [Fruits]: %d\n", score);
   for (unsigned int row = 0; row < b->rows; ++row) {
     fprintf(stdout, "%s", b->lines[row]);
   }
-
-  fprintf(stdout, "\n[Score: %d]\n", score);
 }
 
-int game_start_interactive(Screen **screen, Board **board, Snake **snake) {
+int game_start_interactive(Screen **screen, Board **board) {
   screen_setup(*screen);
   screen_flush();
-  Snake *s = *snake;
+
+  Board *b = (*board);
 
   int quit = 0;
   while (quit == 0 && !feof(stdin)) {
-    // update board
-    _game_update(board, snake);
-    _game_render(board, _game_score(*snake));
+    _game_update(board);
+    _game_render(board, _game_score(b->snake));
 
     int c = fgetc(stdin);
     switch (c) {
@@ -47,19 +45,18 @@ int game_start_interactive(Screen **screen, Board **board, Snake **snake) {
       quit = 1;
     } break;
     case 'k': {
-      s->direction = SNAKE_UP;
+      b->snake_direction = SNAKE_UP;
     } break;
     case 'j': {
-      s->direction = SNAKE_DOWN;
+      b->snake_direction = SNAKE_DOWN;
     } break;
     case 'h': {
-      s->direction = SNAKE_LEFT;
+      b->snake_direction = SNAKE_LEFT;
     } break;
     case 'l': {
-      s->direction = SNAKE_RIGHT;
+      b->snake_direction = SNAKE_RIGHT;
     } break;
     }
-    // handle control changes (lets make this a rougue like!) (after snake)
   }
 
   screen_restore(*screen);

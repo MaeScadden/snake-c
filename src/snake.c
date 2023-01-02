@@ -1,6 +1,17 @@
 #include "includes/snake.h"
 
-Snake *snake_init(unsigned int x, unsigned int y, int direction) {
+Snake *snake_init(unsigned int x, unsigned int y) {
+  Snake *snake = malloc(sizeof(Snake));
+
+  snake->x = x;
+  snake->y = y;
+  snake->next = NULL;
+  snake->prev = NULL;
+
+  return snake;
+}
+
+int snake_valid_direction(int direction) {
   switch (direction) {
   case SNAKE_UP: {
   } break;
@@ -11,22 +22,9 @@ Snake *snake_init(unsigned int x, unsigned int y, int direction) {
   case SNAKE_RIGHT: {
   } break;
   default: {
-    Panic("snake_init given a invalid direction[%d]\n", direction);
+    return 0;
   } break;
   }
 
-  SnakeBody *head = malloc(sizeof(SnakeBody));
-  head->x = x;
-  head->y = y;
-  head->next = NULL;
-
-  Snake *snake = malloc(sizeof(Snake));
-  snake->direction = direction;
-  snake->body = head;
-
-  snake->body->prev = NULL;
-
-  return snake;
+  return 1;
 }
-void snake_move(Snake *snake);
-void snake_look(Snake *snake, int direction);
