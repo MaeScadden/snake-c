@@ -24,7 +24,7 @@ void _game_render(Board **board, int score) {
 
   fprintf(stdout, "Top Row\n");
   for (unsigned int row = 0; row < b->rows; ++row) {
-    fprintf(stdout, "%d%s", row, b->lines[row]);
+    fprintf(stdout, "%s", b->lines[row]);
     // fwrite(b->lines[row], 1, (b->cols + 1) * b->rows, stdout);
   }
 

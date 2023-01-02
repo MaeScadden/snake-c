@@ -95,15 +95,15 @@ Board *board_init(unsigned int cols, unsigned int rows) {
   board->rows = rows;
   board->cols = cols;
 
-  board->lines = malloc(sizeof(char *));
+  board->lines = malloc(sizeof(char *) * board->rows);
 
   for (unsigned int row = 0; row < rows; ++row) {
-    unsigned int size = cols + 1;
-    board->lines[row] = malloc(sizeof(char) * size);
+    board->lines[row] = malloc(sizeof(char) * board->cols + 1);
 
     for (unsigned int col = 0; col < board->cols; ++col) {
       board->lines[row][col] = TILE_EMPTY_CHAR;
     }
+
     board->lines[row][cols] = '\n';
   }
 
