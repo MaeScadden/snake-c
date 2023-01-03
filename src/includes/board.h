@@ -4,9 +4,9 @@
 #include "snake.h"
 #include <stdlib.h>
 
-#define TILE_SNAKE_HEAD_CHAR 'X'
-#define TILE_SNAKE_BODY_CHAR 'x'
-#define TILE_EMPTY_CHAR '~'
+#define TILE_SNAKE_HEAD_CHAR '/'
+#define TILE_SNAKE_BODY_CHAR '|'
+#define TILE_EMPTY_CHAR ' '
 #define TILE_FRUIT_CHAR '@'
 
 typedef struct {

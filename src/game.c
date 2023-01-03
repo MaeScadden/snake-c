@@ -24,13 +24,26 @@ void _game_render(Board **board, int score) {
   Board *b = *board;
 
   fprintf(stdout, "Snake in c         [Fruits]: %d\n", score);
-  // fprintf(stdout, "\n");
+
+  fprintf(stdout, "╔═");
+  for (unsigned int col = 1; col < b->cols; ++col) {
+    fprintf(stdout, "══");
+  }
+  fprintf(stdout, "══╗\n");
+
   for (unsigned int row = 0; row < b->rows; ++row) {
+    fprintf(stdout, "║");
     for (unsigned int col = 0; col < b->cols; ++col) {
       fprintf(stdout, " %c", b->lines[row][col]);
     }
-    fprintf(stdout, "\n");
+    fprintf(stdout, " ║\n");
   }
+
+  fprintf(stdout, "╚═");
+  for (unsigned int col = 1; col < b->cols; ++col) {
+    fprintf(stdout, "══");
+  }
+  fprintf(stdout, "══╝\n");
 }
 
 int game_start_interactive(Screen **screen, Board **board) {
