@@ -12,6 +12,14 @@ targets = lib/board.o lib/screen.o lib/snake.o lib/fruit.o lib/game.o
 default: src/main.c $(targets) $(print_h)
 	$C -o main src/main.c $(targets)
 
+setup:
+	$(MAKE) lib/snake.o
+	$(MAKE) lib/screen.o
+	$(MAKE) lib/fruit.o
+	$(MAKE) lib/board.o
+	$(MAKE) lib/game.o
+	$(MAKE) default
+
 lib/board.o: src/board.c $(board_h)
 	$C -c src/board.c
 	mv board.o lib/
