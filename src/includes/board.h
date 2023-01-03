@@ -1,6 +1,7 @@
 #pragma once
 #include "fruit.h"
 #include "print.h"
+#include "rand.h"
 #include "snake.h"
 #include <stdlib.h>
 
@@ -20,17 +21,6 @@ typedef struct {
 } Board;
 
 void board_update(Board **board);
+void board_free_space(unsigned int *x, unsigned int *y, Board **board);
 Board *board_init(unsigned int width, unsigned int height,
                   int snake_start_direction);
-void board_free_space(unsigned int *x, unsigned int *y, Board **board);
-
-#define rand_num(min, max) (rand() % (max - min + 1)) + min
-
-#define CleanupBoard(_world)                                                   \
-  do {                                                                         \
-    if (world == NULL)                                                         \
-      break;                                                                   \
-    free(world->board);                                                        \
-    free(world->snake);                                                        \
-    free(world);                                                               \
-  } while (0)

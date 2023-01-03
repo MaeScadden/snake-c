@@ -23,7 +23,8 @@ void _game_render(Board **board, int score) {
 
   Board *b = *board;
 
-  fprintf(stdout, "Snake in c         [Fruits]: %d\n", score);
+  fprintf(stdout, "Snake in c\n");
+  fprintf(stdout, "use hjkl to move the snake\n");
 
   fprintf(stdout, "╔═");
   for (unsigned int col = 1; col < b->cols; ++col) {
@@ -44,6 +45,7 @@ void _game_render(Board **board, int score) {
     fprintf(stdout, "══");
   }
   fprintf(stdout, "══╝\n");
+  fprintf(stdout, "[Fruits]: %d\n", score);
 }
 
 int game_start_interactive(Screen **screen, Board **board) {

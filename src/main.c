@@ -4,16 +4,20 @@
 #include "includes/screen.h"
 #include <unistd.h>
 
-int main(int argc, char **argv) {
-  int width = 8;
-  int height = 10;
+int usage() {
+  printf("Usage: ./main <width: int > 5> <height: int > 5>\n");
+  return 1;
+}
 
-  if (argc == 2) {
-    width = atoi(argv[1]);
-  } else if (argc == 3) {
-    width = atoi(argv[1]);
-    height = atoi(argv[2]);
-  }
+int main(int argc, char **argv) {
+  if (argc != 3)
+    return usage();
+
+  int width = atoi(argv[1]);
+  int height = atoi(argv[2]);
+
+  if (width < 5 || height < 5)
+    return usage();
 
   Board *board = board_init(width, height, 0);
   Screen *screen = screen_init();
