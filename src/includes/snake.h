@@ -1,5 +1,4 @@
 #pragma once
-#include "print.h"
 #include <stdlib.h>
 
 typedef struct Snake {
@@ -18,3 +17,4 @@ typedef enum {
 
 Snake *snake_init(unsigned int x, unsigned int y);
 int snake_valid_direction(int direction);
+Snake *snake_tail(Snake **snake);

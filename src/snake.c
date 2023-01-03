@@ -28,3 +28,15 @@ int snake_valid_direction(int direction) {
 
   return 1;
 }
+
+Snake *snake_tail(Snake **snake) {
+  if (snake == NULL)
+    return NULL;
+
+  Snake *current = *snake;
+  while (current->next) {
+    current = current->next;
+  }
+
+  return current;
+}
